@@ -16,6 +16,14 @@ using namespace web;
 using namespace web::http;
 using namespace web::http::client;
 using namespace concurrency::streams;
+
+//input client id
+//input lat 
+//input lng
+//input rad 
+
+
+
  
 int main() {
 	// Create a file stream to write the received file into it.
