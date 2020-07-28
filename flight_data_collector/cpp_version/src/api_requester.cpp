@@ -1,4 +1,7 @@
 // This file will request JSON data from the OpenSky API
+// https://opensky-network.org/apidoc/
+
+//Source of most of this code 
 // http://www.atakansarioglu.com/easy-quick-start-cplusplus-rest-client-example-cpprest-tutorial/
 
 // compile with this 
@@ -6,6 +9,8 @@
 
 
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <cpprest/http_client.h>
 #include <cpprest/filestream.h>
 #include <cpprest/uri.h>
@@ -17,6 +22,7 @@ using namespace web::http;
 using namespace web::http::client;
 using namespace concurrency::streams;
 
+//using namespace std;
 //input client id
 //input lat 
 //input lng
@@ -24,8 +30,23 @@ using namespace concurrency::streams;
 
 
 
- 
+//int send_request(std::string lamin, std::string lomin, std::string lamax, std::string lomax);
+
 int main() {
+
+	// fake args
+	int r1[5] = {1,45,5,47,10};
+	
+	//build api request.. 
+	std::ostringstream os;
+	std::string lamin = std::to_string(r1[1]);
+	std::string lomin = std::to_string(r1[2]);
+	std::string lamax = std::to_string(r1[3]);
+	std::string lomax = std::to_string(r1[4]);
+	os << "states/all?lamin=" << lamin << "&lomin="<< lomin <<"&lamax="<< lamax <<"&lomax="<< lomax << ""; //"states/all?lamin=45.8389&lomin=5.9962&lamax=47.8229&lomax=10.5226"
+	std::string requestPath = os.str();
+
+
 	// Create a file stream to write the received file into it.
 	auto fileStream = std::make_shared<ostream>();
 	
@@ -40,7 +61,7 @@ int main() {
 		http_client client(U("https://opensky-network.org"));
  
 		// Build request URI and start the request.
-		return client.request(methods::GET, uri_builder(U("api")).append_path(U("states/all?lamin=45.8389&lomin=5.9962&lamax=47.8229&lomax=10.5226")).to_string());
+		return client.request(methods::GET, uri_builder(U("api")).append_path(U(requestPath)).to_string());
 	})
  
 	// Get the response.
@@ -52,6 +73,7 @@ int main() {
  
 		// Write the response body to file stream.
 		response.body().read_to_end(fileStream->streambuf()).wait();
+		// std::cout << response.body() << "\n";
  
 		// Close the file.
 		return fileStream->close();
