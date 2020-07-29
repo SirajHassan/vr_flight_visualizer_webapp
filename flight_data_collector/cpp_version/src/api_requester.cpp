@@ -3,7 +3,6 @@
 
 //Source of some of this code 
 // http://www.atakansarioglu.com/easy-quick-start-cplusplus-rest-client-example-cpprest-tutorial/
-// http://www.atakansarioglu.com/easy-quick-start-cplusplus-rest-client-example-cpprest-tutorial/
 
 // compile with this 
 // g++ -std=c++11 api_requester.cpp -stdlib=libc++ -lcpprest -lssl -lcrypto -lboost_system -lboost_thread-mt -lboost_chrono-mt -L/usr/local/opt/openssl/lib -I/usr/local/opt/openssl/include
@@ -16,6 +15,7 @@
 #include <cpprest/filestream.h>
 #include <cpprest/uri.h>
 #include <cpprest/json.h>
+#include <typeinfo>
  
 using namespace utility;
 using namespace web;
@@ -31,23 +31,15 @@ using namespace concurrency::streams;
 
 
 
-int send_request(std::string lamin, std::string lomin, std::string lamax, std::string lomax);
+bool get_request(std::string lamin, std::string lomin, std::string lamax, std::string lomax);
 
-int main() {
+bool get_request(std::string lamin, std::string lomin, std::string lamax, std::string lomax){
 
-	// fake args
-	int r1[5] = {1,45,5,47,10};
 	
-	//build api request.. 
+	// create api path
 	std::ostringstream os;
-	std::string lamin = std::to_string(r1[1]);
-	std::string lomin = std::to_string(r1[2]);
-	std::string lamax = std::to_string(r1[3]);
-	std::string lomax = std::to_string(r1[4]);
-	os << "states/all?lamin=" << lamin << "&lomin="<< lomin <<"&lamax="<< lamax <<"&lomax="<< lomax << ""; //"states/all?lamin=45.8389&lomin=5.9962&lamax=47.8229&lomax=10.5226"
+	os << "states/all?lamin=" << lamin << "&lomin="<< lomin <<"&lamax="<< lamax <<"&lomax="<< lomax << ""; 
 	std::string requestPath = os.str();
-
-
 
 	// Make a GET request.
 	auto requestJson = http_client(U("https://opensky-network.org"))
@@ -55,7 +47,7 @@ int main() {
 			uri_builder(U("api")).append_path(U(requestPath)).to_string())
  
 	// Get the response.
-	.then([](http_response response) {
+	.then([=](http_response response) {
 		// Check the status code.
 		if (response.status_code() != 200) {
 			throw std::runtime_error("Returned " + std::to_string(response.status_code()));
@@ -66,13 +58,15 @@ int main() {
 	})
  
 	// Get the data field.
-	.then([](json::value jsonObject) {
+	.then([=](json::value jsonObject) {
 		return jsonObject[U("states")];
 	})
  
 	// Parse the user details.
-	.then([](json::value jsonObject) {
-		std::cout << jsonObject[0]; 
+	.then([=](json::value jsonObject) {
+		std::cout << jsonObject[0] << std::endl;
+		std::cout << jsonObject[0][0] << std::endl;
+
 	});
  
 	// Wait for the concurrent tasks to finish.
@@ -80,7 +74,32 @@ int main() {
 		requestJson.wait();
 	} catch (const std::exception &e) {
 		printf("Error exception:%s\n", e.what());
+		return false;
 	}
- 
+	return true;
+}
+
+
+
+
+
+
+
+
+int main() {
+
+	// fake args
+	int r1[5] = {1,45,5,47,10};
+
+	
+	//build api request.. 
+	std::ostringstream os;
+	std::string lamin = std::to_string(r1[1]);
+	std::string lomin = std::to_string(r1[2]);
+	std::string lamax = std::to_string(r1[3]);
+	std::string lomax = std::to_string(r1[4]);
+	
+	get_request(lamin,lomin,lamax,lomax);
+
 	return 0;
 }
