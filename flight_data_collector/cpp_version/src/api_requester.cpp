@@ -16,6 +16,7 @@
 #include <cpprest/uri.h>
 #include <cpprest/json.h>
 #include <typeinfo>
+
  
 using namespace utility;
 using namespace web;
@@ -31,11 +32,11 @@ using namespace concurrency::streams;
 
 
 
-bool get_request(std::string lamin, std::string lomin, std::string lamax, std::string lomax);
+json::value get_request(std::string lamin, std::string lomin, std::string lamax, std::string lomax);
 
-bool get_request(std::string lamin, std::string lomin, std::string lamax, std::string lomax){
+json::value get_request(std::string lamin, std::string lomin, std::string lamax, std::string lomax){
 
-	
+	json::value jsonObjectResult;
 	// create api path
 	std::ostringstream os;
 	os << "states/all?lamin=" << lamin << "&lomin="<< lomin <<"&lamax="<< lamax <<"&lomax="<< lomax << ""; 
@@ -58,7 +59,8 @@ bool get_request(std::string lamin, std::string lomin, std::string lamax, std::s
 	})
  
 	// Get the data field.
-	.then([=](json::value jsonObject) {
+	.then([=](json::value jsonObject) mutable {
+		jsonObjectResult = jsonObject;
 		return jsonObject[U("states")];
 	})
  
@@ -74,9 +76,9 @@ bool get_request(std::string lamin, std::string lomin, std::string lamax, std::s
 		requestJson.wait();
 	} catch (const std::exception &e) {
 		printf("Error exception:%s\n", e.what());
-		return false;
+		
 	}
-	return true;
+	return jsonObjectResult;
 }
 
 
@@ -99,7 +101,9 @@ int main() {
 	std::string lamax = std::to_string(r1[3]);
 	std::string lomax = std::to_string(r1[4]);
 	
-	get_request(lamin,lomin,lamax,lomax);
+	json::value jsonObjectResult = get_request(lamin,lomin,lamax,lomax);
+	std::cout << jsonObjectResult[U("states")][0] << std::endl;
+	std::cout << jsonObjectResult[U("states")][0][0] << std::endl;
 
 	return 0;
 }

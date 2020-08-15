@@ -37,13 +37,11 @@ int main(){
 
 //--- start thread pool -----------------------//
 
-	//each thread will pop element off queue, and start requesting the api until signaled to stop.. 
-
-	
-
+	//each thread will pop element off queue, and start requesting the api until signaled to stop..
+	//when connection lost clear databse table.
 
 
-
+//--- 
 
 
 
