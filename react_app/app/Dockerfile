@@ -10,11 +10,16 @@ ENV PATH /app/node_modules/.bin:$PATH
 # install app dependencies
 COPY package.json ./
 COPY package-lock.json ./
+
 RUN npm install 
 RUN npm install react-scripts@3.4.1 -g
 
+#A-frame dependencies
+RUN apk add git 
+RUN npm install --save aframe aframe-react
+
 # add app
-COPY . ./
+#COPY . ./
 
 # start app
 CMD ["npm", "start"]
