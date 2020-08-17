@@ -3,6 +3,8 @@ import './App.css'
 import 'aframe'
 import { Entity, Scene } from 'aframe-react'
 import ReactDOM from 'react-dom'
+import ControlPanel2D from './Control-panel/ControlPanel2D'
+import InitialScene from './A-Frame/Scenes/InitialScene'
 
 // nest all components the application might need in this component.
 
@@ -11,12 +13,10 @@ class App extends Component {
 
   render () {
     return (
-      <Scene>
-        <Entity geometry={{ primitive: 'box' }} material={{ color: 'red' }} position={{ x: 0, y: 0, z: -5 }} />
-        <Entity light={{ type: 'point' }} />
-        <Entity gltf-model={{ src: 'virtualcity.gltf' }} />
-        <Entity text={{ value: 'Hello, WebVR!' }} />
-      </Scene>
+      <div className='App'>
+        <InitialScene />
+        <ControlPanel2D />
+      </div>
     )
   }
 }
