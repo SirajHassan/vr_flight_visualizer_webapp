@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from requests.models import Request
 from rest_framework import generics
+from rest_framework.response import Response
 from .serializers import RequestSerializer
 
 class RequestsRudView(generics.RetrieveUpdateDestroyAPIView): #DetailView CreateView FormView
@@ -8,10 +9,24 @@ class RequestsRudView(generics.RetrieveUpdateDestroyAPIView): #DetailView Create
 	serializer_class = RequestSerializer #converts to json and validates the data
 	queryset = Request.objects.all()
 	print("RUDView")
-	print(queryset)
 
 	def get_queryset(self):
 		return Request.objects.all()
+
+	# def list(self,request):
+	# 	queryset = self.get_queryset()
+	# 	serializer = RequestSerializer(queryset,many = True)
+	# 	return Response(serializer.data)
+
+	# def get(self,request,pk,format=None):
+	# 	print("GETGET")
+	# 	req = Request.objects.get(pk = pk)
+	# 	serializer = RequestSerializer(req)
+	# 	print(serializer.data)
+	# 	return Response(serializer.data)
+
+
+
 
 
 class RequestsCreateView(generics.CreateAPIView): #DetailView CreateView FormView
@@ -19,7 +34,6 @@ class RequestsCreateView(generics.CreateAPIView): #DetailView CreateView FormVie
 	serializer_class = RequestSerializer #converts to json and validates the data
 	queryset = Request.objects.all()
 	print("CreateView")
-	print(queryset)
 
 	def get_queryset(self):
 		return Request.objects.all()

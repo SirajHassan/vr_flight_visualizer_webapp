@@ -1,11 +1,17 @@
 Commands..
 
 Build:
-  
+
   docker build -t app:dev .
 
 
 Run Docker image:
- 
+
  docker run     -it     --rm     -v ${PWD}:/app     -v /app/node_modules     -p 3001:3000     -e CHOKIDAR_USEPOLLING=true     app:dev
 
+
+
+ "proxy": {
+     "target": "https://localhost:8000",
+     "secure": false
+ },

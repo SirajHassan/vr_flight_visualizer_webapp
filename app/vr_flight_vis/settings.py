@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'requests',
+    'corsheaders',
 ]
 
 
@@ -133,11 +134,29 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
     ),
 }
+
+
+#TODO fix this before produciton
+# MIDDLEWARE = [
+#
+#
+#     'corsheaders.middleware.CorsMiddleware',
+#     'django.middleware.security.SecurityMiddleware',
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+#     'django.contrib.auth.middleware.AuthenticationMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+#     'django.contrib.messages.middleware.MessageMiddleware',
+# ]
+#
+# #http://www.srikanthtechnologies.com/blog/python/enable_cors_for_django.aspx
+#
+# CORS_ORIGIN_ALLOW_ALL = True
+#helo
