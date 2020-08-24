@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'vr_flight_vis.urls'
@@ -143,18 +144,13 @@ REST_FRAMEWORK = {
     ),
 }
 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3001',
+]
 
-#TODO fix this before produciton
-# MIDDLEWARE = [
-#
-#
-#     'corsheaders.middleware.CorsMiddleware',
-#     'django.middleware.security.SecurityMiddleware',
-#     'django.contrib.sessions.middleware.SessionMiddleware',
-#     'django.contrib.auth.middleware.AuthenticationMiddleware',
-#     'django.middleware.common.CommonMiddleware',
-#     'django.contrib.messages.middleware.MessageMiddleware',
-# ]
+
+
 #
 # #http://www.srikanthtechnologies.com/blog/python/enable_cors_for_django.aspx
 #
