@@ -3,13 +3,15 @@ from requests.models import Request
 from rest_framework import generics
 from rest_framework.response import Response
 from .serializers import RequestSerializer
+from django.http import HttpRequest
+from rest_framework.reverse import reverse
 
 class RequestsRudView(generics.RetrieveUpdateDestroyAPIView): #DetailView CreateView FormView
 	lookup_field = 'pk' #different with django 2.0, #url(r'?P<pk>\d+')
 	serializer_class = RequestSerializer #converts to json and validates the data
 	queryset = Request.objects.all()
 	print("RUDView")
-
+	
 	def get_queryset(self):
 		return Request.objects.all()
 
@@ -34,6 +36,9 @@ class RequestsCreateView(generics.CreateAPIView): #DetailView CreateView FormVie
 	serializer_class = RequestSerializer #converts to json and validates the data
 	queryset = Request.objects.all()
 	print("CreateView")
+	req = HttpRequest().path
+	print(req)
+
 
 	def get_queryset(self):
 		return Request.objects.all()

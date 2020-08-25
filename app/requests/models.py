@@ -8,11 +8,11 @@ from rest_framework.reverse import reverse as api_reverse
 
 
 class Request(models.Model):
-	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+	# user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	lat = models.DecimalField( max_digits = 10, decimal_places = 5, null = True, blank = True)
 	lng = models.DecimalField( max_digits = 10, decimal_places = 5, null = True, blank = True )
 	timestamp = models.DateTimeField(auto_now_add = True)
 	data = JSONField(null=True, blank=True)
 
-	def __str__(self):
-		return str(self.user)
+	# def __str__(self):
+	# 	return str(self.user)

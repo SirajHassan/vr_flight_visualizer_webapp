@@ -7,9 +7,10 @@ class RequestSerializer(serializers.ModelSerializer):
 		model = Request
 		fields = [
 			'pk',
-			'user',
+			# 'user',
 			'lat',
 			'lng',
 			'timestamp',
 			'data'
 		]
+		extra_kwargs = {'user': {'required': False}}
