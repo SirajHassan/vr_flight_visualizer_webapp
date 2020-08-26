@@ -10,6 +10,7 @@ class RequestSerializer(serializers.ModelSerializer):
 			# 'user',
 			'lat',
 			'lng',
+			'rad',
 			'timestamp',
 			'data'
 		]

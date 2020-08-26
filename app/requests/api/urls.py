@@ -8,5 +8,5 @@ register_converter(converters.FloatUrlParameterConverter, 'float')
 
 urlpatterns = [
    path('<int:pk>',RequestsRudView.as_view(),name='request-rud'),
-   path('lat=<float:lat>&long=<float:lon>&rad=<int:rad>&id=<int:id>',RequestsCreateView.as_view(),name='request-create'),
+   path('lat=<float:lat>&lon=<float:lon>&rad=<int:rad>',RequestsCreateView.as_view(),name='request-create'),
 ]
