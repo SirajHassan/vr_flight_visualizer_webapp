@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_api',
-    'requests',
     'corsheaders',
     'flight_data',
 ]
