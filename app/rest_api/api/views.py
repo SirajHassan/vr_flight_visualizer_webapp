@@ -6,8 +6,8 @@ from .serializers import UserRequestSerializer
 from django.http import HttpRequest
 from django.http import HttpResponse
 from rest_framework.reverse import reverse
-
-
+from flight_data.util import pythonRQ_test
+from flight_data.util import worker
 
 class UserRequestsRudView(generics.RetrieveUpdateDestroyAPIView): #DetailView CreateView FormView
 	lookup_field = 'pk' #different with django 2.0, #url(r'?P<pk>\d+')
@@ -17,8 +17,6 @@ class UserRequestsRudView(generics.RetrieveUpdateDestroyAPIView): #DetailView Cr
 
 	def get_queryset(self):
 		return UserRequest.objects.all()
-
-
 
 
 class UserRequestsCreateView(generics.CreateAPIView):
@@ -38,6 +36,12 @@ class UserRequestsCreateView(generics.CreateAPIView):
 		print(rad)
 		new_req = UserRequest(lat = lat, lng = lon, rad = rad)
 		new_req.save()
+
+		#python RQ worker
+		pythonRQ_test.test(new_req.pk)
+		worker.run()
+
+
 		return HttpResponse(str(new_req.pk))
 
 
