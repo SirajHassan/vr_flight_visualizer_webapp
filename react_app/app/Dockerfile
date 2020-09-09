@@ -21,7 +21,8 @@ RUN npm install --save aframe aframe-react
 #numeric form input dependecies
 RUN npm install react-numeric-input --save
 
-#..#comments#comments
+#proxyserver
+RUN npm install http-proxy-middleware --save
 
 # add app
 #COPY . ./
